@@ -1,7 +1,12 @@
+from sklearn.preprocessing import StandardScaler
+
 from finder.data_finder import DataFinder
-from producer.data_producer import DataProducer
+from model.data_normalizer import DataNormalizer
+from model.data_producer import DataProducer
+from model.predictor import Predictor
 from util.dataframe_utils import DataframeUtils
 from util.finder_utils import FinderUtils
+from util.predictor_utils import PredictorUtils
 
 
 def main():
@@ -18,6 +23,11 @@ def main():
     producer.drop_highly_correlated_features(DataframeUtils.FEATURES_CORRELATION_VALUE)
     producer.cyclical_encoding('Month')
     producer.cyclical_encoding('Hour')
+
+    normalizer = DataNormalizer(StandardScaler())
+    predictor = Predictor(producer.df, normalizer, PredictorUtils.MODELS)
+    df = predictor.predict()
+    print(df)
 
 if __name__ == '__main__':
     main()
