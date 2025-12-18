@@ -11,7 +11,7 @@ class PredictorUtils:
     TARGET_COLUMN = 'Rented_Bike_Count'
     TEST_SIZE = 0.1
     RANDOM_SEED = 42
-    MODEL_N_ESTIMATORS = 1000
+    MODEL_N_ESTIMATORS = 4000
     MODEL_N_NEIGHBORS = 7
 
     MODELS = {
