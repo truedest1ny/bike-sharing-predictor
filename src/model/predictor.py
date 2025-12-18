@@ -15,6 +15,8 @@ class Predictor:
         self.df = df
         self.normalizer = normalizer
         self.models = models
+        self.y_test = None
+        self.predictions = {}
 
     def predict(self) -> pd.DataFrame:
         x_train, x_test, y_train, y_test = self._prepare(
@@ -23,9 +25,11 @@ class Predictor:
             PredictorUtils.RANDOM_SEED)
 
         metrics = copy.deepcopy(PredictorUtils.METRICS)
+        self.y_test = y_test
 
         for model_name, model in self.models.items():
             y_predicted = model.fit(x_train, y_train).predict(x_test)
+            self.predictions[model_name] = y_predicted
 
             mse = mean_squared_error(y_test, y_predicted)
             rmse = np.sqrt(mse)
@@ -54,3 +58,8 @@ class Predictor:
         x_test_scaled = self.normalizer.normalize_test(x_test)
 
         return x_train_scaled, x_test_scaled, y_train, y_test
+
+    @staticmethod
+    def define_best_model(metrics_df: pd.DataFrame, comparing_metric: str) -> str:
+        best_model = metrics_df.loc[metrics_df[comparing_metric].idxmax()]
+        return best_model['Model']

@@ -53,3 +53,7 @@ class DataProducer:
         print(f"Deleted columns (threshold > {threshold}): {to_drop}")
 
         self.df = self.df.drop(columns=to_drop)
+
+    def get_feature_names(self, target: str) -> list:
+        df = self.df.copy()
+        return df.drop(columns=[target]).columns.tolist()
