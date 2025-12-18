@@ -10,6 +10,23 @@ class DataProducer:
     def __init__(self, df: pd.DataFrame):
         self.df = df
 
+    def clean_data(self) -> None:
+        initial_rows = len(self.df)
+        self.df = self.df.drop_duplicates()
+        self.df = self.df.dropna()
+        consistent_rows = len(self.df)
+        if initial_rows > consistent_rows:
+            print(f"Cleaned {initial_rows - consistent_rows} rows (duplicates/NaN).")
+
+    def visualize_distribution(self, target: str) -> None:
+        plt.figure(figsize=(10, 6))
+        sns.histplot(self.df[target], kde=True, color='blue')
+        plt.title(f'Distribution of {target}')
+        plt.xlabel('Count')
+        plt.ylabel('Frequency')
+        plt.savefig(DataframeUtils.DISTRIBUTION_PLOT_PATH)
+        plt.show()
+
     def parse_date(self, date_column: str) -> None:
         self.df[date_column] = pd.to_datetime(self.df[date_column], format='%d/%m/%Y')
         self.df['Month'] = self.df[date_column].dt.month

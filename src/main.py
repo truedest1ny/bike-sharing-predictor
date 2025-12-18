@@ -17,6 +17,8 @@ def main():
     df = finder.get_data()
     df.columns = DataframeUtils.BIKE_DATA_COLUMNS
     producer = DataProducer(df)
+    producer.clean_data()
+    producer.visualize_distribution(DataframeUtils.TARGET_COLUMN)
     producer.parse_date('Date')
     producer.drop_unnecessary_data('Functioning_Day', 'Yes')
     producer.one_hot_encode(DataframeUtils.NON_NUMERIC_COLUMNS)
