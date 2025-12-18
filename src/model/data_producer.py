@@ -68,7 +68,6 @@ class DataProducer:
         to_drop = [column for column in upper.columns if any(upper[column] > threshold)]
 
         print(f"Deleted columns (threshold > {threshold}): {to_drop}")
-
         self.df = self.df.drop(columns=to_drop)
 
     def get_feature_names(self, target: str) -> list:

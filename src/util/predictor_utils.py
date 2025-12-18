@@ -13,7 +13,6 @@ class PredictorUtils:
     RANDOM_SEED = 42
     MODEL_N_ESTIMATORS = 4000
     MODEL_N_NEIGHBORS = 7
-
     MODELS = {
         'Linear Regression': LinearRegression(),
         'Random Forest': RandomForestRegressor(n_estimators=MODEL_N_ESTIMATORS,
@@ -23,7 +22,6 @@ class PredictorUtils:
         "Decision Tree": DecisionTreeRegressor(random_state=RANDOM_SEED),
         'K-Neighbors Regressor': KNeighborsRegressor(n_neighbors=MODEL_N_NEIGHBORS)
     }
-
     METRICS = {
             'Model': [],
             'RMSE': [],

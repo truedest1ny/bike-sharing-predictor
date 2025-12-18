@@ -1,12 +1,12 @@
 import pandas as pd
 from pathlib import Path
 
+
 class DataFinder:
     def __init__(self, folder:str, filename:str, encoding_strategy:str):
         self.folder = folder
         self.filename = filename
         self.encoding_strategy = encoding_strategy
-
 
     def get_data(self) -> pd.DataFrame:
         base_path = Path('.').resolve()

@@ -44,7 +44,6 @@ class Predictor:
 
         return pd.DataFrame(metrics).sort_values(by='R2', ascending=False)
 
-
     def _prepare(self, target: str,
                  test_size: float,
                  random_state: int) -> tuple:
