@@ -7,8 +7,24 @@ from util.visualizer_utils import VisualizerUtils
 
 
 class Visualizer:
+    """
+        A utility class for generating diagnostic and comparative visualizations.
+
+        This class handles the graphical representation of model benchmarks,
+        feature significance, and prediction accuracy.
+    """
     @staticmethod
     def visualize_comparing(df: pd.DataFrame):
+        """
+            Creates a multi-panel bar chart comparing regression metrics across all models.
+
+            Plots MSE, RMSE, MAE, and R2 in a 2x2 grid. Each bar is annotated with
+            its precise value for easier comparison between algorithms.
+
+            Args:
+                df (pd.DataFrame): DataFrame containing 'Model' names and corresponding
+                                    error/accuracy metrics.
+        """
         models = df['Model'].tolist()
         metrics_to_plot = [col for col in df.columns if col != 'Model']
 
@@ -55,7 +71,16 @@ class Visualizer:
 
     @staticmethod
     def plot_feature_importance(model, feature_names: list):
+        """
+            Visualizes which features have the most influence on the model's predictions.
 
+            This method specifically works for tree-based models (like Random Forest)
+            that provide the 'feature_importances_' attribute.
+
+            Args:
+                model: The trained scikit-learn model object.
+                feature_names (list): List of strings representing the feature labels.
+        """
         if not hasattr(model, 'feature_importances_'):
             print(f"Model {type(model).__name__} does not support feature_importances_")
             return
@@ -85,6 +110,18 @@ class Visualizer:
 
     @staticmethod
     def plot_regression_results(y_test, y_predicted, model_name: str):
+        """
+            Generates a scatter plot of Actual vs Predicted values.
+
+            The dashed red line represents the 'identity line' (perfect prediction).
+            This plot is essential for identifying patterns in errors (heteroscedasticity)
+            and outliers.
+
+            Args:
+                y_test: Ground truth target values.
+                y_predicted: Model's predicted target values.
+                model_name (str): Name of the model for the plot title.
+        """
         plt.figure(figsize=(10, 6))
         sns.scatterplot(x=y_test, y=y_predicted, alpha=0.3)
 
